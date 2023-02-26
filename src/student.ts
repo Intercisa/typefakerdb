@@ -38,7 +38,3 @@ export function buildStudentInserts(){
 function toStudentValues(student: Student): string {
     return `('${student.id}', '${replaceApostrophe(student.name)}', '${replaceApostrophe(student.surname)}', '${student.dateOfBirth.toISOString()}', ARRAY[${formatArray(student.phoneNumbers)}], '${student.primarySkill}', '${student.created.toISOString()}', '${student.updated.toISOString()}')`;
 }
-
-export function toStudentInsert(student: Student): string {
-    return `INSERT INTO students (id, name, surname, date_of_birth, phone_numbers, primary_skill, created, updated) VALUES ('${student.id}', '${replaceApostrophe(student.name)}', '${replaceApostrophe(student.surname)}', '${student.dateOfBirth.toISOString()}', ARRAY[${formatArray(student.phoneNumbers)}], '${student.primarySkill}', '${student.created.toISOString()}', '${student.updated.toISOString()}');`;
-}
