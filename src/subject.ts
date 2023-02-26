@@ -30,6 +30,15 @@ export interface StudentSubject {
         created: Date
 }
 
+export function buildSubjectInserts(){
+    const values = subjectArray.map(s => toSubjectValues(s)).join(',\n ');
+    return `INSERT INTO subjects (id, name, tutor, created, updated) VALUES \n${values};`
+}
+
+function toSubjectValues(subject: Subject): string {
+    return `('${subject.id}', '${subject.name}', '${replaceApostrophe(subject.tutor)}', '${subject.created.toISOString()}', '${subject.updated.toISOString()}')`;
+}
+
 export const createStudentSubject: (studentId: number, subjectId: number) => string = (studentId: number, subjectId: number) => {
     return `INSERT INTO student_subject (student_id, subject_id, created) VALUES ('${studentId}', '${subjectId}', '${faker.date.recent().toISOString()}');`
 }

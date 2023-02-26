@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.getPreMadeSubjects = exports.toSubjectInsert = exports.createStudentSubject = exports.subjectArray = void 0;
+exports.getPreMadeSubjects = exports.toSubjectInsert = exports.createStudentSubject = exports.buildSubjectInserts = exports.subjectArray = void 0;
 var faker_1 = require("@faker-js/faker");
 var util_1 = require("./util");
 var ID = 1;
@@ -14,6 +14,14 @@ var createRandomSubject = function () {
     };
 };
 exports.subjectArray = (0, util_1.makeArray)(util_1.SUBJECT_INSERT, createRandomSubject);
+function buildSubjectInserts() {
+    var values = exports.subjectArray.map(function (s) { return toSubjectValues(s); }).join(',\n ');
+    return "INSERT INTO subjects (id, name, tutor, created, updated) VALUES \n".concat(values, ";");
+}
+exports.buildSubjectInserts = buildSubjectInserts;
+function toSubjectValues(subject) {
+    return "('".concat(subject.id, "', '").concat(subject.name, "', '").concat((0, util_1.replaceApostrophe)(subject.tutor), "', '").concat(subject.created.toISOString(), "', '").concat(subject.updated.toISOString(), "')");
+}
 var createStudentSubject = function (studentId, subjectId) {
     return "INSERT INTO student_subject (student_id, subject_id, created) VALUES ('".concat(studentId, "', '").concat(subjectId, "', '").concat(faker_1.faker.date.recent().toISOString(), "');");
 };

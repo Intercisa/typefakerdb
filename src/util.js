@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.buildInsertsInto = exports.buildValues = exports.asyncWriteFile = exports.randomIntFromInterval = exports.formatArray = exports.replaceApostrophe = exports.makeArray = exports.MARK_INSERT = exports.SUBJECT_INSERT = exports.STUDENT_INSERT = void 0;
+exports.asyncWriteFile = exports.randomIntFromInterval = exports.formatArray = exports.replaceApostrophe = exports.makeArray = exports.MARK_INSERT = exports.SUBJECT_INSERT = exports.STUDENT_INSERT = void 0;
 var fs_1 = require("fs");
 var path_1 = require("path");
 exports.STUDENT_INSERT = 10;
@@ -84,44 +84,3 @@ function asyncWriteFile(filename, data) {
     });
 }
 exports.asyncWriteFile = asyncWriteFile;
-function buildValues(obj) {
-    var key;
-    var middle = '';
-    var lastPart = ');';
-    for (key in obj) {
-        var value = obj[key];
-        // console.log(typeof value);
-        middle += "".concat(checkValOInstace(value), " ,");
-    }
-    console.log("".concat(middle).concat(lastPart));
-}
-exports.buildValues = buildValues;
-function checkValOInstace(value) {
-    if (value instanceof Date)
-        return value.toISOString();
-    if (value instanceof Array)
-        return "ARRAY[".concat(formatArray(value), "]");
-    return value;
-}
-function buildInsertsInto(obj, tableName) {
-    var firstPart = "INSERT INTO ".concat(tableName, " (");
-    var lastPart = ') VALUES (';
-    var middlePart = '';
-    var key;
-    for (key in obj) {
-        middlePart += "".concat(formatColumnName(key.toString()), ", ");
-    }
-    console.log("".concat(firstPart).concat(middlePart.substring(0, middlePart.length - 2)).concat(lastPart).concat(buildValues(obj)));
-    ;
-}
-exports.buildInsertsInto = buildInsertsInto;
-function formatColumnName(column) {
-    var col = column;
-    for (var i = 0; i < col.length; i++) {
-        var ch = col[i];
-        if (ch == ch.toUpperCase()) {
-            col = col.replace(ch, "_".concat(ch.toLowerCase()));
-        }
-    }
-    return col;
-}

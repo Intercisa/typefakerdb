@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.toStudentInsert = exports.studentArray = exports.createRandomStudent = void 0;
+exports.toStudentInsert = exports.buildStudentInserts = exports.studentArray = exports.createRandomStudent = void 0;
 var faker_1 = require("@faker-js/faker");
 var util_1 = require("./util");
 var ID = 1;
@@ -18,6 +18,14 @@ var createRandomStudent = function () {
 };
 exports.createRandomStudent = createRandomStudent;
 exports.studentArray = (0, util_1.makeArray)(util_1.STUDENT_INSERT, exports.createRandomStudent);
+function buildStudentInserts() {
+    var values = exports.studentArray.map(function (s) { return toStudentValues(s); }).join(',\n ');
+    return "INSERT INTO students (id, name, surname, date_of_birth, phone_numbers, primary_skill, created, updated) VALUES \n".concat(values, ";");
+}
+exports.buildStudentInserts = buildStudentInserts;
+function toStudentValues(student) {
+    return "('".concat(student.id, "', '").concat((0, util_1.replaceApostrophe)(student.name), "', '").concat((0, util_1.replaceApostrophe)(student.surname), "', '").concat(student.dateOfBirth.toISOString(), "', ARRAY[").concat((0, util_1.formatArray)(student.phoneNumbers), "], '").concat(student.primarySkill, "', '").concat(student.created.toISOString(), "', '").concat(student.updated.toISOString(), "')");
+}
 function toStudentInsert(student) {
     return "INSERT INTO students (id, name, surname, date_of_birth, phone_numbers, primary_skill, created, updated) VALUES ('".concat(student.id, "', '").concat((0, util_1.replaceApostrophe)(student.name), "', '").concat((0, util_1.replaceApostrophe)(student.surname), "', '").concat(student.dateOfBirth.toISOString(), "', ARRAY[").concat((0, util_1.formatArray)(student.phoneNumbers), "], '").concat(student.primarySkill, "', '").concat(student.created.toISOString(), "', '").concat(student.updated.toISOString(), "');");
 }

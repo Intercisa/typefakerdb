@@ -33,6 +33,9 @@ for (var i = 0; i < util_1.STUDENT_INSERT; i++) {
 var examInserts = examresult_1.examArray.map(function (exam) {
     return __assign(__assign({}, exam), { studentId: (0, util_1.randomIntFromInterval)(1, util_1.STUDENT_INSERT), subjectId: (0, util_1.randomIntFromInterval)(1, util_1.SUBJECT_INSERT) });
 }).map(function (exam) { return (0, examresult_1.toExamInsert)(exam); });
-var arrayToWrite = __spreadArray(__spreadArray(__spreadArray(__spreadArray([], subjects, true), studentInserts, true), studentSubjectInserts, true), examInserts, true);
-student_1.studentArray.forEach(function (sub) { return (0, util_1.buildInsertsInto)(sub, 'Tablename'); });
-// asyncWriteFile('./inserts.sql', arrayToWrite.join('\n'));
+var exams = examresult_1.examArray.map(function (exam) {
+    return __assign(__assign({}, exam), { studentId: (0, util_1.randomIntFromInterval)(1, util_1.STUDENT_INSERT), subjectId: (0, util_1.randomIntFromInterval)(1, util_1.SUBJECT_INSERT) });
+});
+// const arrayToWrite: string[] = [...subjects, ...studentInserts, ...studentSubjectInserts, ...examInserts];
+var arrayToWrite = __spreadArray(__spreadArray([(0, subject_1.buildSubjectInserts)(), (0, student_1.buildStudentInserts)()], studentSubjectInserts, true), [(0, examresult_1.buildExamInserts)(exams)], false);
+(0, util_1.asyncWriteFile)('./inserts.sql', arrayToWrite.join('\n'));

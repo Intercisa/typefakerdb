@@ -2,9 +2,9 @@ import { promises as fsPromises } from 'fs';
 import { join } from 'path';
 
 
-export  const STUDENT_INSERT:number = 100_00;
-export  const SUBJECT_INSERT:number = 1000;
-export  const MARK_INSERT:number = 1000_000;
+export  const STUDENT_INSERT:number = 10;
+export  const SUBJECT_INSERT:number = 10;
+export  const MARK_INSERT:number = 10;
 
 export function makeArray<T>(length: number, generator: () => T): T[] {
     return Array.from({ length }, generator)
