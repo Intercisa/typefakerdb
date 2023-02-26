@@ -1,0 +1,25 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "create fake data with faker and insert into a postgres DB",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/db.js",
+    "dev": "rm -r src/inserts.sql || true && tsc src/db.ts && node src/db.js",
+    "build": "tsc -p .",
+    "lint": "tslint -c tslint.json -p tsconfig.json --fix"
+  },
+  "author": "BSipiczki",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@types/node": "^18.14.1",
+    "@types/pg-format": "^1.0.2",
+    "nodemon": "^2.0.20",
+    "pg": "^8.9.0",
+    "ts-node": "^10.9.1",
+    "tslint": "^6.1.3",
+    "typescript": "^4.9.5"
+  }
+}
