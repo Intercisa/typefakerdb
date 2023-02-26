@@ -2,9 +2,9 @@ import { promises as fsPromises } from 'fs';
 import { join } from 'path';
 
 
-export  const STUDENT_INSERT:number = 10;
-export  const SUBJECT_INSERT:number = 10;
-export  const MARK_INSERT:number = 10;
+export  const STUDENT_INSERT:number = 100_00;
+export  const SUBJECT_INSERT:number = 1000;
+export  const MARK_INSERT:number = 1000_000;
 
 export function makeArray<T>(length: number, generator: () => T): T[] {
     return Array.from({ length }, generator)
@@ -44,48 +44,4 @@ export async function asyncWriteFile(filename: string, data: any) {
     console.log(err);
     return 'Something went wrong';
   }
-}
-
-export function buildValues<T>(obj: T){
-  let key: keyof T;
-  let middle: string = '';
-  const lastPart = ');';
-  for(key in obj){
-
-    const value = obj[key];
-    // console.log(typeof value);
-    middle += `${checkValOInstace(value)} ,`
-  }
-   console.log(`${middle}${lastPart}`)
-}
-
-function checkValOInstace(value: any){
-  if(value instanceof Date) return value.toISOString();
-  if(value instanceof Array) return `ARRAY[${formatArray(value)}]`;
-  return value;
-}
-
-export function buildInsertsInto<T>(obj: T, tableName: string){
-  const firstPart = `INSERT INTO ${tableName} (`;
-  const lastPart = ') VALUES (';
-  let middlePart: string = '';
-
-  let key: keyof T;
-  for(key in obj){
-    middlePart += `${formatColumnName(key.toString())}, `
-  }
-
-  console.log(`${firstPart}${middlePart.substring(0, middlePart.length - 2)}${lastPart}${buildValues(obj)}`);
-  ;
-}
-
-function formatColumnName(column: string){
-  let col = column;
-  for (let i = 0; i < col.length; i++) {
-    let ch = col[i];
-    if (ch == ch.toUpperCase()) {
-      col = col.replace(ch, `_${ch.toLowerCase()}`)
-     }
-  }
-  return col;
 }

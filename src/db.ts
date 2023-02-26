@@ -1,7 +1,7 @@
 import { studentArray, toStudentInsert} from './student';
 import { createStudentSubject, subjectArray, toSubjectInsert} from './subject';
 import { examArray, toExamInsert } from './examresult';
-import { randomIntFromInterval, asyncWriteFile, buildValues, buildInsertsInto, STUDENT_INSERT, SUBJECT_INSERT} from './util'
+import { randomIntFromInterval, asyncWriteFile, STUDENT_INSERT, SUBJECT_INSERT} from './util'
 
 
 const subjects = subjectArray.map(subject => toSubjectInsert(subject));
@@ -23,7 +23,4 @@ const examInserts: string[] = examArray.map(exam => {
 
 const arrayToWrite: string[] = [...subjects, ...studentInserts, ...studentSubjectInserts, ...examInserts];
 
-
-studentArray.forEach(sub => buildInsertsInto(sub, 'Tablename'));
-
-// asyncWriteFile('./inserts.sql', arrayToWrite.join('\n'));
+asyncWriteFile('./inserts.sql', arrayToWrite.join('\n'));
